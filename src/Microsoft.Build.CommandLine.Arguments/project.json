@@ -1,0 +1,32 @@
+{
+  "authors": [ "jeffkl" ],
+  "buildOptions": {
+    "outputName": "Microsoft.Build.CommandLine.Arguments",
+    "warningsAsErrors": true,
+    "xmlDoc": true
+  },
+  "dependencies": {
+    "Microsoft.Build.Utilities.Core": "15.1.262-preview5"
+  },
+  "frameworks": {
+    "netstandard1.3": {
+      "dependencies": {
+        "NETStandard.Library": "1.6.0"
+      }
+    },
+    "net46": {}
+  },
+  "packOptions": {
+    "licenseUrl": "https://github.com/jeffkl/MSBuildArgs/blob/master/LICENSE",
+    "owners": [ "jeffkl" ],
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/jeffkl/MSBuildArgs"
+    },
+    "requireLicenseAcceptance": false,
+    "summary": "A class library for generating an MSBuild command-line",
+    "tags": [ "MSBuild", "command", "line", "builder" ]
+  },
+  "title": "MSBuild Command-line Argument Builder",
+  "version": "1.0.0-beta-*"
+}

@@ -1,0 +1,25 @@
+﻿{
+  "version": "1.0.0-*",
+  "buildOptions": {
+    "outputName": "Microsoft.Build.CommandLine.Arguments.UnitTests"
+  },
+  "dependencies": {
+    "Microsoft.Build.CommandLine.Arguments": "1.0.0-*",
+    "NUnit": "3.4.1",
+    "dotnet-test-nunit": "3.4.0-beta-2",
+    "Shouldly": "2.8.2"
+  },
+  "frameworks": {
+    "netcoreapp1.0": {
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "type": "platform",
+          "version": "1.0.1"
+        }
+      },
+      "imports": "dnxcore50"
+    },
+    "net46": {}
+  },
+  "testRunner": "nunit"
+}
