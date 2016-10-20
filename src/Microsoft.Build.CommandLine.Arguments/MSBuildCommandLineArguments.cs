@@ -2,6 +2,7 @@
 using Microsoft.Build.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Microsoft.Build.CommandLine.Arguments
 {
@@ -65,6 +66,11 @@ namespace Microsoft.Build.CommandLine.Arguments
         public int? MaxCpuCount { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether or not to auto-include any MSBuild.rsp files.
+        /// </summary>
+        public bool? NoAutoResponse { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating if the default console logger should be disabled and to not log events to the console.
         /// </summary>
         public bool? NoConsoleLogger { get; set; }
@@ -90,6 +96,22 @@ namespace Microsoft.Build.CommandLine.Arguments
         /// Gets a list of project-level properties.
         /// </summary>
         public IDictionary<string, string> Properties { get; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+        /// <summary>
+        /// Gets a list of text files to use that contain command-line settings.
+        /// </summary>
+        /// <remarks>
+        /// Any response files named &quot;MSBuild.rsp&quot; are automatically consumed from the following locations:
+        /// <list type="number">
+        ///   <item>
+        ///     <description>The directory of MSBuild.exe.</description>
+        ///   </item>
+        ///   <item>
+        ///     <description>The directory of the first project or solution built.</description>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        public IList<string> ResponseFiles { get; } = new List<string>();
 
         /// <summary>
         /// Gets the list of targets to build.
@@ -167,9 +189,17 @@ namespace Microsoft.Build.CommandLine.Arguments
 
             commandLineBuilder.AppendSwitchIfTrue($"/{(_useShortSwitchNames ? "ds" : "DetailedSummary")}", DetailedSummary);
 
+            commandLineBuilder.AppendSwitchIfTrue($"/{(_useShortSwitchNames ? "noautorsp" : "NoAutoResponse")}", NoAutoResponse);
+
             commandLineBuilder.AppendSwitchIfTrue("/NoLogo", NoLogo);
 
             commandLineBuilder.AppendSwitchIfTrue($"/{(_useShortSwitchNames ? "ver" : "Version")}", Version);
+
+            foreach (string responseFile in ResponseFiles.Where(i => !String.IsNullOrWhiteSpace(i)))
+            {
+                commandLineBuilder.AppendSwitch("@");
+                commandLineBuilder.AppendTextUnquoted($"\"{responseFile}\"");
+            }
 
             return commandLineBuilder.ToString();
         }
