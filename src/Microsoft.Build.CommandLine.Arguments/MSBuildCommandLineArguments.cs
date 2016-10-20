@@ -10,6 +10,25 @@ namespace Microsoft.Build.CommandLine.Arguments
     /// </summary>
     public class MSBuildCommandLineArguments
     {
+        private readonly bool _useShortSwitchNames;
+
+        /// <summary>
+        /// Initializes an instance of the MSBuildCommandLineArguments class.
+        /// </summary>
+        public MSBuildCommandLineArguments()
+            : this(useShortSwitchNames: false)
+        {
+        }
+
+        /// <summary>
+        /// Initializes an instance of the MSBuildCommandLineArguments class.
+        /// </summary>
+        /// <param name="useShortSwitchNames"><code>true</code> to use short command-line argument switches like '/nr' instead of '/NodeReuse', otherwise <code>false</code>.</param>
+        public MSBuildCommandLineArguments(bool useShortSwitchNames)
+        {
+            _useShortSwitchNames = useShortSwitchNames;
+        }
+
         /// <summary>
         /// Gets or sets the <see cref="MSBuildConsoleLoggerParameters"/>.
         /// </summary>
@@ -105,52 +124,52 @@ namespace Microsoft.Build.CommandLine.Arguments
         {
             CommandLineBuilder commandLineBuilder = new CommandLineBuilder();
 
-            commandLineBuilder.AppendSwitchIfNotNull("/Target:", Targets);
+            commandLineBuilder.AppendSwitchIfNotNull($"/{(_useShortSwitchNames ? "t" : "Target")}:", Targets);
 
-            commandLineBuilder.AppendSwitchIfNotNull("/Property:", Properties);
+            commandLineBuilder.AppendSwitchIfNotNull($"/{(_useShortSwitchNames ? "p" : "Property")}:", Properties);
 
-            commandLineBuilder.AppendSwitchIfNotNull("/MaxCpuCount:", MaxCpuCount, minValue: 1);
+            commandLineBuilder.AppendSwitchIfNotNull($"/{(_useShortSwitchNames ? "m" : "MaxCpuCount")}:", MaxCpuCount, minValue: 1);
 
-            commandLineBuilder.AppendSwitchIfNotNull("/ToolsVersion:", ToolsVersion);
+            commandLineBuilder.AppendSwitchIfNotNull($"/{(_useShortSwitchNames ? "tv" : "ToolsVersion")}:", ToolsVersion);
 
-            commandLineBuilder.AppendSwitchIfNotNull("/Verbosity:", Verbosity);
+            commandLineBuilder.AppendSwitchIfNotNull($"/{(_useShortSwitchNames ? "v" : "Verbosity")}:", Verbosity);
 
-            commandLineBuilder.AppendSwitchIfNotNullOrEmpty("/Validate:", Validate);
+            commandLineBuilder.AppendSwitchIfNotNullOrEmpty($"/{(_useShortSwitchNames ? "val" : "Validate")}:", Validate);
 
-            commandLineBuilder.AppendSwitchIfNotNull("/IgnoreProjectExtensions:", IgnoreProjectExtensions);
+            commandLineBuilder.AppendSwitchIfNotNull($"/{(_useShortSwitchNames ? "ignore" : "IgnoreProjectExtensions")}:", IgnoreProjectExtensions);
 
             if (ConsoleLoggerParameters != null)
             {
-                commandLineBuilder.AppendSwitchIfNotNull("/ConsoleLoggerParameters:", ConsoleLoggerParameters.ToString());
+                commandLineBuilder.AppendSwitchIfNotNull($"/{(_useShortSwitchNames ? "clp" : "ConsoleLoggerParameters")}:", ConsoleLoggerParameters.ToString());
             }
 
             commandLineBuilder.AppendSwitchIfTrue("/DistributedFileLogger", DistributedFileLogger);
 
             foreach (MSBuildLoggerParameters logger in Loggers)
             {
-                commandLineBuilder.AppendSwitch($"/Logger:\"{logger}\"");
+                commandLineBuilder.AppendSwitch($"/{(_useShortSwitchNames ? "l" : "Logger")}:\"{logger}\"");
             }
 
-            commandLineBuilder.AppendSwitchIfNotNull("/NodeReuse:", NodeReuse);
+            commandLineBuilder.AppendSwitchIfNotNull($"/{(_useShortSwitchNames ? "nr" : "NodeReuse")}:", NodeReuse);
 
-            commandLineBuilder.AppendSwitchIfTrue("/NoConsoleLogger", NoConsoleLogger);
+            commandLineBuilder.AppendSwitchIfTrue($"/{(_useShortSwitchNames ? "noconlog" : "NoConsoleLogger")}", NoConsoleLogger);
 
             for (int i = 0; i < FileLoggers.Count; i++)
             {
                 string index = FileLoggers.Count > 1 ? i.ToString() : String.Empty;
 
-                commandLineBuilder.AppendSwitch($"/FileLogger{index}");
+                commandLineBuilder.AppendSwitch($"/{(_useShortSwitchNames ? "fl" : "FileLogger")}{index}");
 
-                commandLineBuilder.AppendSwitchIfNotNull($"/FileLoggerParameters{index}:", FileLoggers[i].ToString());
+                commandLineBuilder.AppendSwitchIfNotNull($"/{(_useShortSwitchNames ? "flp" : "FileLoggerParameters")}{index}:", FileLoggers[i].ToString());
             }
 
-            commandLineBuilder.AppendSwitchIfNotNullOrEmpty("/PreProcess:", PreProcess);
+            commandLineBuilder.AppendSwitchIfNotNullOrEmpty($"/{(_useShortSwitchNames ? "pp" : "PreProcess")}:", PreProcess);
 
-            commandLineBuilder.AppendSwitchIfTrue("/DetailedSummary", DetailedSummary);
+            commandLineBuilder.AppendSwitchIfTrue($"/{(_useShortSwitchNames ? "ds" : "DetailedSummary")}", DetailedSummary);
 
             commandLineBuilder.AppendSwitchIfTrue("/NoLogo", NoLogo);
 
-            commandLineBuilder.AppendSwitchIfTrue("/Version", Version);
+            commandLineBuilder.AppendSwitchIfTrue($"/{(_useShortSwitchNames ? "ver" : "Version")}", Version);
 
             return commandLineBuilder.ToString();
         }
