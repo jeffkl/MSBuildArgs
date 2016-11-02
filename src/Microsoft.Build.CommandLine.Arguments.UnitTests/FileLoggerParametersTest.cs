@@ -38,7 +38,7 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
                 Append = true
             });
 
-            commandLineArguments.ToString().ShouldBe($"/FileLogger /FileLoggerParameters:Append");
+            commandLineArguments.ToString().ShouldBe("/FileLogger /FileLoggerParameters:Append");
         }
 
         [Test]

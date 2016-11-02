@@ -45,7 +45,7 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
                     MaxCpuCount = item
                 };
 
-                commandLineArguments.ToString().ShouldBe($"/MaxCpuCount");
+                commandLineArguments.ToString().ShouldBe("/MaxCpuCount");
             }
         }
     }

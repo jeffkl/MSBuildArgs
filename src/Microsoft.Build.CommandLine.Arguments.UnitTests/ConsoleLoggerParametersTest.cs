@@ -21,7 +21,7 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
                 }
             };
 
-            commandLineArguments.ToString().ShouldBe($"/ConsoleLoggerParameters:\"ErrorsOnly;ShowCommandLine;DisableMPLogging\"");
+            commandLineArguments.ToString().ShouldBe("/ConsoleLoggerParameters:\"ErrorsOnly;ShowCommandLine;DisableMPLogging\"");
         }
 
         [Test]
