@@ -8,7 +8,6 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
     [TestFixture]
     public class VerbosityTest
     {
-
         [Test]
         public void Verbosity()
         {

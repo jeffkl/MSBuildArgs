@@ -169,7 +169,7 @@ namespace Microsoft.Build.CommandLine.Arguments
 
             foreach (MSBuildLoggerParameters logger in Loggers)
             {
-                commandLineBuilder.AppendSwitch($"/{(_useShortSwitchNames ? "l" : "Logger")}:\"{logger}\"");
+                commandLineBuilder.AppendSwitch($"\"/{(_useShortSwitchNames ? "l" : "Logger")}:{logger}\"");
             }
 
             commandLineBuilder.AppendSwitchIfNotNull($"/{(_useShortSwitchNames ? "nr" : "NodeReuse")}:", NodeReuse);

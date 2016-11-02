@@ -9,7 +9,6 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
     [TestFixture]
     public class PropertiesTest
     {
-
         [Test]
         public void PropertySingle()
         {

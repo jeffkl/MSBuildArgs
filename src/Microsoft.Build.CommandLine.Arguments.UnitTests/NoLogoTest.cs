@@ -6,7 +6,6 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
     [TestFixture]
     public class NoLogoTest
     {
-
         [Test]
         public void NoLogoTrue()
         {

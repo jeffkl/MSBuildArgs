@@ -7,7 +7,6 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
     [TestFixture]
     public class MaxCpuTest
     {
-
         [Test]
         public void MaxCpuCountPositiveNumber()
         {

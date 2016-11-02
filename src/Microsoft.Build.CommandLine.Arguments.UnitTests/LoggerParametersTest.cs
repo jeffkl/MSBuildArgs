@@ -1,6 +1,6 @@
-﻿using System.Linq;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Shouldly;
+using System.Linq;
 
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 {
@@ -25,7 +25,7 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
                 ClassName = "LoggerA",
             });
 
-            commandLineArguments.ToString().ShouldBe($"/Logger:\"{commandLineArguments.Loggers.First().ClassName},{commandLineArguments.Loggers.First().Assembly};{commandLineArguments.Loggers.First().Parameters}\" /Logger:\"{commandLineArguments.Loggers.Last().ClassName},{commandLineArguments.Loggers.Last().Assembly}\"");
+            commandLineArguments.ToString().ShouldBe($"\"/Logger:{commandLineArguments.Loggers.First().ClassName},{commandLineArguments.Loggers.First().Assembly};{commandLineArguments.Loggers.First().Parameters}\" \"/Logger:{commandLineArguments.Loggers.Last().ClassName},{commandLineArguments.Loggers.Last().Assembly}\"");
         }
 
         [Test]
@@ -40,7 +40,7 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
                 Parameters = "1 2 3",
             });
 
-            commandLineArguments.ToString().ShouldBe($"/Logger:\"{commandLineArguments.Loggers.First().ClassName},{commandLineArguments.Loggers.First().Assembly};{commandLineArguments.Loggers.First().Parameters}\"");
+            commandLineArguments.ToString().ShouldBe($"\"/Logger:{commandLineArguments.Loggers.First().ClassName},{commandLineArguments.Loggers.First().Assembly};{commandLineArguments.Loggers.First().Parameters}\"");
         }
     }
 }

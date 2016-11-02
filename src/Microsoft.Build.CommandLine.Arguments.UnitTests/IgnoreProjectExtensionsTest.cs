@@ -7,7 +7,6 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
     [TestFixture]
     public class IgnoreProjectExtensionsTest
     {
-
         [Test]
         public void IgnoreProjectExtensionsSingle()
         {
