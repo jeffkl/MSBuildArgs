@@ -7,17 +7,6 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
     public class DistributedFileLoggerTest
     {
         [Test]
-        public void DistributedFileLoggerTrue()
-        {
-            MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
-            {
-                DistributedFileLogger = true,
-            };
-
-            commandLineArguments.ToString().ShouldBe("/DistributedFileLogger");
-        }
-
-        [Test]
         public void DistributedFileLoggerFalse()
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
@@ -26,6 +15,17 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
             };
 
             commandLineArguments.ToString().ShouldBeEmpty();
+        }
+
+        [Test]
+        public void DistributedFileLoggerTrue()
+        {
+            MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
+            {
+                DistributedFileLogger = true,
+            };
+
+            commandLineArguments.ToString().ShouldBe("/DistributedFileLogger");
         }
     }
 }

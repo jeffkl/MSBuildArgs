@@ -7,17 +7,6 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
     public class DetailedSummaryTest
     {
         [Test]
-        public void DetailedSummaryTrue()
-        {
-            MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
-            {
-                DetailedSummary = true,
-            };
-
-            commandLineArguments.ToString().ShouldBe("/DetailedSummary");
-        }
-
-        [Test]
         public void DetailedSummaryFalse()
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
@@ -26,6 +15,17 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
             };
 
             commandLineArguments.ToString().ShouldBeEmpty();
+        }
+
+        [Test]
+        public void DetailedSummaryTrue()
+        {
+            MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
+            {
+                DetailedSummary = true,
+            };
+
+            commandLineArguments.ToString().ShouldBe("/DetailedSummary");
         }
     }
 }

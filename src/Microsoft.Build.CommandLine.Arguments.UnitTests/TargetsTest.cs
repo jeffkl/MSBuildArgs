@@ -1,25 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Shouldly;
+using System;
+using System.Collections.Generic;
 
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 {
     [TestFixture]
     public class TargetsTest
     {
-        [Test]
-        public void TargetSingle()
-        {
-            const string target = "Test";
-
-            MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments();
-
-            commandLineArguments.Targets.Add(target);
-
-            commandLineArguments.ToString().ShouldBe($"/Target:{target}");
-        }
-
         [Test]
         public void TargetMultiple()
         {
@@ -38,6 +26,18 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
             }
 
             commandLineArguments.ToString().ShouldBe($"/Target:{String.Join(";", targets)}");
+        }
+
+        [Test]
+        public void TargetSingle()
+        {
+            const string target = "Test";
+
+            MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments();
+
+            commandLineArguments.Targets.Add(target);
+
+            commandLineArguments.ToString().ShouldBe($"/Target:{target}");
         }
     }
 }

@@ -1,7 +1,7 @@
-using System.Linq;
 using Microsoft.Build.Framework;
 using NUnit.Framework;
 using Shouldly;
+using System.Linq;
 
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 {
@@ -9,16 +9,23 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
     public class FileLoggerParametersTest
     {
         [Test]
-        public void FileLoggerSingleLogFile()
+        public void FileLoggerMultiple()
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments();
 
             commandLineArguments.FileLoggers.Add(new MSBuildFileLoggerParameters
             {
-                LogFile = "my log.log"
+                LogFile = "warnings.log",
+                Options = MSBuildLoggerOptions.WarningsOnly,
             });
 
-            commandLineArguments.ToString().ShouldBe($"/FileLogger /FileLoggerParameters:\"LogFile={commandLineArguments.FileLoggers.First().LogFile}\"");
+            commandLineArguments.FileLoggers.Add(new MSBuildFileLoggerParameters
+            {
+                LogFile = "errors.log",
+                Options = MSBuildLoggerOptions.ErrorsOnly,
+            });
+
+            commandLineArguments.ToString().ShouldBe($"/FileLogger0 /FileLoggerParameters0:\"LogFile={commandLineArguments.FileLoggers[0].LogFile};{commandLineArguments.FileLoggers[0].Options}\" /FileLogger1 /FileLoggerParameters1:\"LogFile={commandLineArguments.FileLoggers[1].LogFile};{commandLineArguments.FileLoggers[1].Options}\"");
         }
 
         [Test]
@@ -48,6 +55,19 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
         }
 
         [Test]
+        public void FileLoggerSingleLogFile()
+        {
+            MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments();
+
+            commandLineArguments.FileLoggers.Add(new MSBuildFileLoggerParameters
+            {
+                LogFile = "my log.log"
+            });
+
+            commandLineArguments.ToString().ShouldBe($"/FileLogger /FileLoggerParameters:\"LogFile={commandLineArguments.FileLoggers.First().LogFile}\"");
+        }
+
+        [Test]
         public void FileLoggerSingleVerbosity()
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments();
@@ -58,26 +78,6 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
             });
 
             commandLineArguments.ToString().ShouldBe($"/FileLogger /FileLoggerParameters:Verbosity={commandLineArguments.FileLoggers.First().Verbosity}");
-        }
-
-        [Test]
-        public void FileLoggerMultiple()
-        {
-            MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments();
-
-            commandLineArguments.FileLoggers.Add(new MSBuildFileLoggerParameters
-            {
-                LogFile = "warnings.log",
-                Options = MSBuildLoggerOptions.WarningsOnly,
-            });
-
-            commandLineArguments.FileLoggers.Add(new MSBuildFileLoggerParameters
-            {
-                LogFile = "errors.log",
-                Options = MSBuildLoggerOptions.ErrorsOnly,
-            });
-
-            commandLineArguments.ToString().ShouldBe($"/FileLogger0 /FileLoggerParameters0:\"LogFile={commandLineArguments.FileLoggers[0].LogFile};{commandLineArguments.FileLoggers[0].Options}\" /FileLogger1 /FileLoggerParameters1:\"LogFile={commandLineArguments.FileLoggers[1].LogFile};{commandLineArguments.FileLoggers[1].Options}\"");
         }
     }
 }

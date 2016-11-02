@@ -1,23 +1,12 @@
-using System;
 using NUnit.Framework;
 using Shouldly;
+using System;
 
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 {
     [TestFixture]
     public class ValidateTest
     {
-        [Test]
-        public void ValidateDefault()
-        {
-            MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
-            {
-                Validate = String.Empty,
-            };
-
-            commandLineArguments.ToString().ShouldBe("/Validate");
-        }
-
         [Test]
         public void ValidateCustom()
         {
@@ -27,6 +16,17 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
             };
 
             commandLineArguments.ToString().ShouldBe($"/Validate:{commandLineArguments.Validate}");
+        }
+
+        [Test]
+        public void ValidateDefault()
+        {
+            MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
+            {
+                Validate = String.Empty,
+            };
+
+            commandLineArguments.ToString().ShouldBe("/Validate");
         }
     }
 }

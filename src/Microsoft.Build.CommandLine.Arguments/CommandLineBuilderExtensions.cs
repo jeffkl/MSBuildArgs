@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Microsoft.Build.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Build.Utilities;
 
 namespace Microsoft.Build.CommandLine.Arguments
 {

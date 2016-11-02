@@ -7,17 +7,6 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
     public class NoLogoTest
     {
         [Test]
-        public void NoLogoTrue()
-        {
-            MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
-            {
-                NoLogo = true,
-            };
-
-            commandLineArguments.ToString().ShouldBe("/NoLogo");
-        }
-
-        [Test]
         public void NoLogoFalse()
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
@@ -26,6 +15,17 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
             };
 
             commandLineArguments.ToString().ShouldBeEmpty();
+        }
+
+        [Test]
+        public void NoLogoTrue()
+        {
+            MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
+            {
+                NoLogo = true,
+            };
+
+            commandLineArguments.ToString().ShouldBe("/NoLogo");
         }
     }
 }

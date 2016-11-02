@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using NUnit.Framework;
 using Shouldly;
+using System.Collections.Generic;
 
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 {

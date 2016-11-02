@@ -1,23 +1,12 @@
-using System;
 using NUnit.Framework;
 using Shouldly;
+using System;
 
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 {
     [TestFixture]
     public class PreProcessTest
     {
-        [Test]
-        public void PreProcessDefault()
-        {
-            MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
-            {
-                PreProcess = String.Empty,
-            };
-
-            commandLineArguments.ToString().ShouldBe("/PreProcess");
-        }
-
         [Test]
         public void PreProcessCustom()
         {
@@ -27,6 +16,17 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
             };
 
             commandLineArguments.ToString().ShouldBe($"/PreProcess:{commandLineArguments.PreProcess}");
+        }
+
+        [Test]
+        public void PreProcessDefault()
+        {
+            MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
+            {
+                PreProcess = String.Empty,
+            };
+
+            commandLineArguments.ToString().ShouldBe("/PreProcess");
         }
     }
 }

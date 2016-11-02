@@ -7,17 +7,6 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
     public class VersionTest
     {
         [Test]
-        public void VersionTrue()
-        {
-            MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
-            {
-                Version = true,
-            };
-
-            commandLineArguments.ToString().ShouldBe("/Version");
-        }
-
-        [Test]
         public void VersionFalse()
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
@@ -26,6 +15,17 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
             };
 
             commandLineArguments.ToString().ShouldBeEmpty();
+        }
+
+        [Test]
+        public void VersionTrue()
+        {
+            MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
+            {
+                Version = true,
+            };
+
+            commandLineArguments.ToString().ShouldBe("/Version");
         }
     }
 }

@@ -1,29 +1,13 @@
-using System;
 using Microsoft.Build.Framework;
 using NUnit.Framework;
 using Shouldly;
+using System;
 
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 {
     [TestFixture]
     public class ConsoleLoggerParametersTest
     {
-        [Test]
-        public void ConsoleLoggerParametersSingleOption()
-        {
-            const MSBuildLoggerOptions options = MSBuildLoggerOptions.ErrorsOnly;
-
-            MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
-            {
-                ConsoleLoggerParameters = new MSBuildConsoleLoggerParameters
-                {
-                    Options = options
-                }
-            };
-
-            commandLineArguments.ToString().ShouldBe($"/ConsoleLoggerParameters:{options}");
-        }
-
         [Test]
         public void ConsoleLoggerParametersMultipleOptions()
         {
@@ -41,20 +25,14 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
         }
 
         [Test]
-        public void ConsoleLoggerParametersVerbosity()
+        public void ConsoleLoggerParametersNotNullButEmpty()
         {
-            foreach (var @enum in Enum.GetValues(typeof(LoggerVerbosity)))
+            MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
             {
-                MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
-                {
-                    ConsoleLoggerParameters = new MSBuildConsoleLoggerParameters
-                    {
-                        Verbosity = (LoggerVerbosity) @enum
-                    }
-                };
+                ConsoleLoggerParameters = new MSBuildConsoleLoggerParameters(),
+            };
 
-                commandLineArguments.ToString().ShouldBe($"/ConsoleLoggerParameters:Verbosity={Enum.GetName(typeof(LoggerVerbosity), @enum)}");
-            }
+            commandLineArguments.ToString().ShouldBe("");
         }
 
         [Test]
@@ -75,14 +53,36 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
         }
 
         [Test]
-        public void ConsoleLoggerParametersNotNullButEmpty()
+        public void ConsoleLoggerParametersSingleOption()
         {
+            const MSBuildLoggerOptions options = MSBuildLoggerOptions.ErrorsOnly;
+
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
             {
-                ConsoleLoggerParameters = new MSBuildConsoleLoggerParameters(),
+                ConsoleLoggerParameters = new MSBuildConsoleLoggerParameters
+                {
+                    Options = options
+                }
             };
 
-            commandLineArguments.ToString().ShouldBe("");
+            commandLineArguments.ToString().ShouldBe($"/ConsoleLoggerParameters:{options}");
+        }
+
+        [Test]
+        public void ConsoleLoggerParametersVerbosity()
+        {
+            foreach (var @enum in Enum.GetValues(typeof(LoggerVerbosity)))
+            {
+                MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
+                {
+                    ConsoleLoggerParameters = new MSBuildConsoleLoggerParameters
+                    {
+                        Verbosity = (LoggerVerbosity) @enum
+                    }
+                };
+
+                commandLineArguments.ToString().ShouldBe($"/ConsoleLoggerParameters:Verbosity={Enum.GetName(typeof(LoggerVerbosity), @enum)}");
+            }
         }
     }
 }

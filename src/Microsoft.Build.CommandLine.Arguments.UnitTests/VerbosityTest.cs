@@ -1,7 +1,7 @@
-using System;
 using Microsoft.Build.Framework;
 using NUnit.Framework;
 using Shouldly;
+using System;
 
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 {
