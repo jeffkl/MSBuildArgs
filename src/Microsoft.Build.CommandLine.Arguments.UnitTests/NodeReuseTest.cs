@@ -7,17 +7,14 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
     public class NodeReuseTest
     {
         [Test]
-        public void NodeReuseTrueAndFalse()
+        public void NodeReuse([Values(true, false)] bool nodeResuse)
         {
-            foreach (bool val in new[] {true, false})
+            MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
             {
-                MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
-                {
-                    NodeReuse = val,
-                };
+                NodeReuse = nodeResuse,
+            };
 
-                commandLineArguments.ToString().ShouldBe($"/NodeReuse:{val}");
-            }
+            commandLineArguments.ToString().ShouldBe($"/NodeReuse:{nodeResuse}");
         }
     }
 }

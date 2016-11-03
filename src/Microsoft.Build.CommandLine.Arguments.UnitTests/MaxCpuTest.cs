@@ -8,45 +8,25 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
     public class MaxCpuTest
     {
         [Test]
-        public void MaxCpuCountPositiveNumber()
+        public void MaxCpuCountPositiveNumber([Values(1, 10, 50)] int maxCpuCount)
         {
-            IEnumerable<int> values = new List<int>
+            MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
             {
-                1,
-                10,
-                50,
+                MaxCpuCount = maxCpuCount
             };
 
-            foreach (var item in values)
-            {
-                MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
-                {
-                    MaxCpuCount = item
-                };
-
-                commandLineArguments.ToString().ShouldBe($"/MaxCpuCount:{item}");
-            }
+            commandLineArguments.ToString().ShouldBe($"/MaxCpuCount:{maxCpuCount}");
         }
 
         [Test]
-        public void MaxCpuCountZeroAndNegative()
+        public void MaxCpuCountZeroAndNegative([Values(0, -1, -50)] int maxCpuCount)
         {
-            IEnumerable<int> values = new List<int>
+            MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
             {
-                0,
-                -1,
-                -50,
+                MaxCpuCount = maxCpuCount
             };
 
-            foreach (var item in values)
-            {
-                MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
-                {
-                    MaxCpuCount = item
-                };
-
-                commandLineArguments.ToString().ShouldBe("/MaxCpuCount");
-            }
+            commandLineArguments.ToString().ShouldBe("/MaxCpuCount");
         }
     }
 }
