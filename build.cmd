@@ -13,5 +13,5 @@ IF ERRORLEVEL 1 EXIT /B %ERRORLEVEL%
 dotnet test src\Microsoft.Build.CommandLine.Arguments.UnitTests\project.json
 IF ERRORLEVEL 1 EXIT /B %ERRORLEVEL%
 
-dotnet pack src\Microsoft.Build.CommandLine.Arguments\project.json --version-suffix=%VERSION_SUFFIX%
+dotnet pack src\Microsoft.Build.CommandLine.Arguments\project.json --version-suffix=%VERSION_SUFFIX% -c Release
 IF ERRORLEVEL 1 EXIT /B %ERRORLEVEL%
