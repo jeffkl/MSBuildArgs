@@ -4,7 +4,7 @@ using Shouldly;
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 {
     [TestFixture]
-    public class NoAutoResponseTest
+    public class NoAutoResponseTest : TestBase
     {
         [Test]
         public void NoAutoResponseFalse()
@@ -18,25 +18,19 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
         }
 
         [Test]
-        public void NoAutoResponseTrue()
+        public void NoAutoResponseTrue([Values(true, false)] bool useShortSwitchNames)
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
             {
                 NoAutoResponse = true,
             };
 
-            commandLineArguments.ToString().ShouldBe("/NoAutoResponse");
+            commandLineArguments.ToString(useShortSwitchNames: useShortSwitchNames).ShouldBe($"/{GetSwitchName(useShortSwitchNames)}");
         }
 
-        [Test]
-        public void NoAutoResponseTrueShort()
+        protected override string GetSwitchName(bool useShortSwitchNames)
         {
-            MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments(useShortSwitchNames: true)
-            {
-                NoAutoResponse = true,
-            };
-
-            commandLineArguments.ToString().ShouldBe("/noautorsp");
+            return useShortSwitchNames ? "noautorsp" : "NoAutoResponse";
         }
     }
 }

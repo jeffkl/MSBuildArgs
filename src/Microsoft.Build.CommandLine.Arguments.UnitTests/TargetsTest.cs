@@ -6,10 +6,10 @@ using System.Collections.Generic;
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 {
     [TestFixture]
-    public class TargetsTest
+    public class TargetsTest : TestBase
     {
         [Test]
-        public void TargetMultiple()
+        public void TargetMultiple([Values(true, false)] bool useShortSwitchNames)
         {
             var targets = new List<string>
             {
@@ -25,11 +25,11 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
                 commandLineArguments.Targets.Add(target);
             }
 
-            commandLineArguments.ToString().ShouldBe($"/Target:{String.Join(";", targets)}");
+            commandLineArguments.ToString(useShortSwitchNames: useShortSwitchNames).ShouldBe($"/{GetSwitchName(useShortSwitchNames)}:{String.Join(";", targets)}");
         }
 
         [Test]
-        public void TargetSingle()
+        public void TargetSingle([Values(true, false)] bool useShortSwitchNames)
         {
             const string target = "Test";
 
@@ -37,7 +37,12 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 
             commandLineArguments.Targets.Add(target);
 
-            commandLineArguments.ToString().ShouldBe($"/Target:{target}");
+            commandLineArguments.ToString(useShortSwitchNames: useShortSwitchNames).ShouldBe($"/{GetSwitchName(useShortSwitchNames)}:{target}");
+        }
+
+        protected override string GetSwitchName(bool useShortSwitchNames)
+        {
+            return useShortSwitchNames ? "t" : "Target";
         }
     }
 }

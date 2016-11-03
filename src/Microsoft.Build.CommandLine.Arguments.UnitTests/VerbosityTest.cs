@@ -6,10 +6,10 @@ using System;
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 {
     [TestFixture]
-    public class VerbosityTest
+    public class VerbosityTest : TestBase
     {
         [Test]
-        public void Verbosity()
+        public void Verbosity([Values(true, false)] bool useShortSwitchNames)
         {
             foreach (var @enum in Enum.GetValues(typeof(LoggerVerbosity)))
             {
@@ -18,8 +18,13 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
                     Verbosity = (LoggerVerbosity) @enum,
                 };
 
-                commandLineArguments.ToString().ShouldBe($"/Verbosity:{Enum.GetName(typeof(LoggerVerbosity), @enum)}");
+                commandLineArguments.ToString(useShortSwitchNames: useShortSwitchNames).ShouldBe($"/{GetSwitchName(useShortSwitchNames)}:{Enum.GetName(typeof(LoggerVerbosity), @enum)}");
             }
+        }
+
+        protected override string GetSwitchName(bool useShortSwitchNames)
+        {
+            return useShortSwitchNames ? "v" : "Verbosity";
         }
     }
 }

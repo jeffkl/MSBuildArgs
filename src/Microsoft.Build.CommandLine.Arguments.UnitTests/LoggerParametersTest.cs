@@ -5,10 +5,10 @@ using System.Linq;
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 {
     [TestFixture]
-    public class LoggerParametersTest
+    public class LoggerParametersTest : TestBase
     {
         [Test]
-        public void LoggerParametersMultipleTest()
+        public void LoggerParametersMultipleTest([Values(true, false)] bool useShortSwitchNames)
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments();
 
@@ -25,11 +25,11 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
                 ClassName = "LoggerA",
             });
 
-            commandLineArguments.ToString().ShouldBe($"\"/Logger:{commandLineArguments.Loggers.First().ClassName},{commandLineArguments.Loggers.First().Assembly};{commandLineArguments.Loggers.First().Parameters}\" \"/Logger:{commandLineArguments.Loggers.Last().ClassName},{commandLineArguments.Loggers.Last().Assembly}\"");
+            commandLineArguments.ToString(useShortSwitchNames: useShortSwitchNames).ShouldBe($"\"/{GetSwitchName(useShortSwitchNames)}:{commandLineArguments.Loggers.First().ClassName},{commandLineArguments.Loggers.First().Assembly};{commandLineArguments.Loggers.First().Parameters}\" \"/{GetSwitchName(useShortSwitchNames)}:{commandLineArguments.Loggers.Last().ClassName},{commandLineArguments.Loggers.Last().Assembly}\"");
         }
 
         [Test]
-        public void LoggerParametersSingleTest()
+        public void LoggerParametersSingleTest([Values(true, false)] bool useShortSwitchNames)
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments();
 
@@ -40,7 +40,12 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
                 Parameters = "1 2 3",
             });
 
-            commandLineArguments.ToString().ShouldBe($"\"/Logger:{commandLineArguments.Loggers.First().ClassName},{commandLineArguments.Loggers.First().Assembly};{commandLineArguments.Loggers.First().Parameters}\"");
+            commandLineArguments.ToString(useShortSwitchNames: useShortSwitchNames).ShouldBe($"\"/{GetSwitchName(useShortSwitchNames)}:{commandLineArguments.Loggers.First().ClassName},{commandLineArguments.Loggers.First().Assembly};{commandLineArguments.Loggers.First().Parameters}\"");
+        }
+
+        protected override string GetSwitchName(bool useShortSwitchNames)
+        {
+            return useShortSwitchNames ? "l" : "Logger";
         }
     }
 }

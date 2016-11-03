@@ -7,10 +7,10 @@ using System.Linq;
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 {
     [TestFixture]
-    public class PropertiesTest
+    public class PropertiesTest : TestBase
     {
         [Test]
-        public void PropertyMultiple()
+        public void PropertyMultiple([Values(true, false)] bool useShortSwitchNames)
         {
             IDictionary<string, string> properties = new Dictionary<string, string>
             {
@@ -26,11 +26,11 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
                 commandLineArguments.Properties.Add(item.Key, item.Value);
             }
 
-            commandLineArguments.ToString().ShouldBe(String.Join(" ", properties.Select(i => String.Format("/Property:{1}{0}={2}{1}", i.Key, i.Value.Contains("\"") ? "\"" : String.Empty, i.Value.Replace("\"", "\\\"")))));
+            commandLineArguments.ToString(useShortSwitchNames: useShortSwitchNames).ShouldBe(String.Join(" ", properties.Select(i => String.Format("/{3}:{1}{0}={2}{1}", i.Key, i.Value.Contains("\"") ? "\"" : String.Empty, i.Value.Replace("\"", "\\\""), GetSwitchName(useShortSwitchNames)))));
         }
 
         [Test]
-        public void PropertySingle()
+        public void PropertySingle([Values(true, false)] bool useShortSwitchNames)
         {
             const string propertyName = "Property1";
             const string propertyValue = "Test";
@@ -39,7 +39,12 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 
             commandLineArguments.Properties.Add(propertyName, propertyValue);
 
-            commandLineArguments.ToString().ShouldBe($"/Property:{propertyName}={propertyValue}");
+            commandLineArguments.ToString(useShortSwitchNames: useShortSwitchNames).ShouldBe($"/{GetSwitchName(useShortSwitchNames)}:{propertyName}={propertyValue}");
+        }
+
+        protected override string GetSwitchName(bool useShortSwitchNames)
+        {
+            return useShortSwitchNames ? "p" : "Property";
         }
     }
 }

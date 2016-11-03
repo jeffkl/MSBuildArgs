@@ -4,7 +4,7 @@ using Shouldly;
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 {
     [TestFixture]
-    public class NoConsoleLoggerTest
+    public class NoConsoleLoggerTest : TestBase
     {
         [Test]
         public void NoConsoleLoggerFalse()
@@ -18,14 +18,19 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
         }
 
         [Test]
-        public void NoConsoleLoggerTrue()
+        public void NoConsoleLoggerTrue([Values(true, false)] bool useShortSwitchNames)
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
             {
                 NoConsoleLogger = true,
             };
 
-            commandLineArguments.ToString().ShouldBe("/NoConsoleLogger");
+            commandLineArguments.ToString(useShortSwitchNames: useShortSwitchNames).ShouldBe($"/{GetSwitchName(useShortSwitchNames)}");
+        }
+
+        protected override string GetSwitchName(bool useShortSwitchNames)
+        {
+            return useShortSwitchNames ? "noconlog" : "NoConsoleLogger";
         }
     }
 }

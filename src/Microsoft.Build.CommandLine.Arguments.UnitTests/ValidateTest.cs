@@ -5,28 +5,33 @@ using System;
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 {
     [TestFixture]
-    public class ValidateTest
+    public class ValidateTest : TestBase
     {
         [Test]
-        public void ValidateCustom()
+        public void ValidateCustom([Values(true, false)] bool useShortSwitchNames)
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
             {
                 Validate = "Custom.xsd",
             };
 
-            commandLineArguments.ToString().ShouldBe($"/Validate:{commandLineArguments.Validate}");
+            commandLineArguments.ToString(useShortSwitchNames: useShortSwitchNames).ShouldBe($"/{GetSwitchName(useShortSwitchNames)}:{commandLineArguments.Validate}");
         }
 
         [Test]
-        public void ValidateDefault()
+        public void ValidateDefault([Values(true, false)] bool useShortSwitchNames)
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
             {
                 Validate = String.Empty,
             };
 
-            commandLineArguments.ToString().ShouldBe("/Validate");
+            commandLineArguments.ToString(useShortSwitchNames: useShortSwitchNames).ShouldBe($"/{GetSwitchName(useShortSwitchNames)}");
+        }
+
+        protected override string GetSwitchName(bool useShortSwitchNames)
+        {
+            return useShortSwitchNames ? "val" : "Validate";
         }
     }
 }

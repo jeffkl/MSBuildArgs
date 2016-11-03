@@ -4,7 +4,7 @@ using Shouldly;
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 {
     [TestFixture]
-    public class VersionTest
+    public class VersionTest : TestBase
     {
         [Test]
         public void VersionFalse()
@@ -18,14 +18,19 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
         }
 
         [Test]
-        public void VersionTrue()
+        public void VersionTrue([Values(true, false)] bool useShortSwitchNames)
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
             {
                 Version = true,
             };
 
-            commandLineArguments.ToString().ShouldBe("/Version");
+            commandLineArguments.ToString(useShortSwitchNames: useShortSwitchNames).ShouldBe($"/{GetSwitchName(useShortSwitchNames)}");
+        }
+
+        protected override string GetSwitchName(bool useShortSwitchNames)
+        {
+            return useShortSwitchNames ? "ver" : "Version";
         }
     }
 }

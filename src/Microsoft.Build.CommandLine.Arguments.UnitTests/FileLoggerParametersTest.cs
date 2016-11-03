@@ -6,10 +6,10 @@ using System.Linq;
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 {
     [TestFixture]
-    public class FileLoggerParametersTest
+    public class FileLoggerParametersTest : TestBase
     {
         [Test]
-        public void FileLoggerMultiple()
+        public void FileLoggerMultiple([Values(true, false)] bool useShortSwitchNames)
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments();
 
@@ -25,11 +25,11 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
                 Options = MSBuildLoggerOptions.ErrorsOnly,
             });
 
-            commandLineArguments.ToString().ShouldBe($"/FileLogger0 /FileLoggerParameters0:\"LogFile={commandLineArguments.FileLoggers[0].LogFile};{commandLineArguments.FileLoggers[0].Options}\" /FileLogger1 /FileLoggerParameters1:\"LogFile={commandLineArguments.FileLoggers[1].LogFile};{commandLineArguments.FileLoggers[1].Options}\"");
+            commandLineArguments.ToString(useShortSwitchNames: useShortSwitchNames).ShouldBe($"/{GetSwitchName(useShortSwitchNames)}0 /{GetSecondarySwitchName(useShortSwitchNames)}0:\"LogFile={commandLineArguments.FileLoggers[0].LogFile};{commandLineArguments.FileLoggers[0].Options}\" /{GetSwitchName(useShortSwitchNames)}1 /{GetSecondarySwitchName(useShortSwitchNames)}1:\"LogFile={commandLineArguments.FileLoggers[1].LogFile};{commandLineArguments.FileLoggers[1].Options}\"");
         }
 
         [Test]
-        public void FileLoggerSingleAppend()
+        public void FileLoggerSingleAppend([Values(true, false)] bool useShortSwitchNames)
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments();
 
@@ -38,11 +38,11 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
                 Append = true
             });
 
-            commandLineArguments.ToString().ShouldBe("/FileLogger /FileLoggerParameters:Append");
+            commandLineArguments.ToString(useShortSwitchNames: useShortSwitchNames).ShouldBe($"/{GetSwitchName(useShortSwitchNames)} /{GetSecondarySwitchName(useShortSwitchNames)}:Append");
         }
 
         [Test]
-        public void FileLoggerSingleEncoding()
+        public void FileLoggerSingleEncoding([Values(true, false)] bool useShortSwitchNames)
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments();
 
@@ -51,11 +51,11 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
                 Encoding = "Unicode"
             });
 
-            commandLineArguments.ToString().ShouldBe($"/FileLogger /FileLoggerParameters:Encoding={commandLineArguments.FileLoggers.First().Encoding}");
+            commandLineArguments.ToString(useShortSwitchNames: useShortSwitchNames).ShouldBe($"/{GetSwitchName(useShortSwitchNames)} /{GetSecondarySwitchName(useShortSwitchNames)}:Encoding={commandLineArguments.FileLoggers.First().Encoding}");
         }
 
         [Test]
-        public void FileLoggerSingleLogFile()
+        public void FileLoggerSingleLogFile([Values(true, false)] bool useShortSwitchNames)
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments();
 
@@ -64,11 +64,11 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
                 LogFile = "my log.log"
             });
 
-            commandLineArguments.ToString().ShouldBe($"/FileLogger /FileLoggerParameters:\"LogFile={commandLineArguments.FileLoggers.First().LogFile}\"");
+            commandLineArguments.ToString(useShortSwitchNames: useShortSwitchNames).ShouldBe($"/{GetSwitchName(useShortSwitchNames)} /{GetSecondarySwitchName(useShortSwitchNames)}:\"LogFile={commandLineArguments.FileLoggers.First().LogFile}\"");
         }
 
         [Test]
-        public void FileLoggerSingleVerbosity()
+        public void FileLoggerSingleVerbosity([Values(true, false)] bool useShortSwitchNames)
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments();
 
@@ -77,7 +77,17 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
                 Verbosity = LoggerVerbosity.Minimal
             });
 
-            commandLineArguments.ToString().ShouldBe($"/FileLogger /FileLoggerParameters:Verbosity={commandLineArguments.FileLoggers.First().Verbosity}");
+            commandLineArguments.ToString(useShortSwitchNames: useShortSwitchNames).ShouldBe($"/{GetSwitchName(useShortSwitchNames)} /{GetSecondarySwitchName(useShortSwitchNames)}:Verbosity={commandLineArguments.FileLoggers.First().Verbosity}");
+        }
+
+        protected override string GetSwitchName(bool useShortSwitchNames)
+        {
+            return useShortSwitchNames ? "fl" : "FileLogger";
+        }
+
+        private string GetSecondarySwitchName(bool useShortSwitchNames)
+        {
+            return useShortSwitchNames ? "flp" : "FileLoggerParameters";
         }
     }
 }

@@ -4,7 +4,7 @@ using Shouldly;
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 {
     [TestFixture]
-    public class DetailedSummaryTest
+    public class DetailedSummaryTest : TestBase
     {
         [Test]
         public void DetailedSummaryFalse()
@@ -18,14 +18,19 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
         }
 
         [Test]
-        public void DetailedSummaryTrue()
+        public void DetailedSummaryTrue([Values(true, false)] bool useShortSwitchNames)
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
             {
                 DetailedSummary = true,
             };
 
-            commandLineArguments.ToString().ShouldBe("/DetailedSummary");
+            commandLineArguments.ToString(useShortSwitchNames: useShortSwitchNames).ShouldBe($"/{GetSwitchName(useShortSwitchNames)}");
+        }
+
+        protected override string GetSwitchName(bool useShortSwitchNames)
+        {
+            return useShortSwitchNames ? "ds" : "DetailedSummary";
         }
     }
 }

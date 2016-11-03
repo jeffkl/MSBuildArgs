@@ -4,10 +4,10 @@ using Shouldly;
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 {
     [TestFixture]
-    public class ToolsVersionTest
+    public class ToolsVersionTest : TestBase
     {
         [Test]
-        public void ToolsVersion()
+        public void ToolsVersion([Values(true, false)] bool useShortSwitchNames)
         {
             const string toolsVersion = "Test";
 
@@ -16,7 +16,12 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
                 ToolsVersion = toolsVersion,
             };
 
-            commandLineArguments.ToString().ShouldBe($"/ToolsVersion:{toolsVersion}");
+            commandLineArguments.ToString(useShortSwitchNames: useShortSwitchNames).ShouldBe($"/{GetSwitchName(useShortSwitchNames)}:{toolsVersion}");
+        }
+
+        protected override string GetSwitchName(bool useShortSwitchNames)
+        {
+            return useShortSwitchNames ? "tv" : "ToolsVersion";
         }
     }
 }
