@@ -29,7 +29,7 @@ namespace Microsoft.Build.CommandLine.Arguments
         /// <summary>
         /// Gets a list of <see cref="MSBuildFileLoggerParameters"/>.
         /// </summary>
-        public IList<MSBuildFileLoggerParameters> FileLoggers { get; } = new List<MSBuildFileLoggerParameters>();
+        public IList<MSBuildFileLoggerParameters> FileLoggers { get; set; } = new List<MSBuildFileLoggerParameters>();
 
         /// <summary>
         /// Gets a list of extensions to ignore when determining which project file to build.
@@ -39,7 +39,7 @@ namespace Microsoft.Build.CommandLine.Arguments
         /// <summary>
         /// Gets a list of custom loggers to use.
         /// </summary>
-        public ICollection<MSBuildLoggerParameters> Loggers { get; } = new List<MSBuildLoggerParameters>();
+        public IList<MSBuildLoggerParameters> Loggers { get; set; } = new List<MSBuildLoggerParameters>();
 
         /// <summary>
         /// Gets or sets the maximum the maximum number of concurrent processes to build with.  If the switch is not used, the default value used is 1. If the switch is used without a value MSBuild will use up to the number of processors on the computer.
@@ -74,9 +74,14 @@ namespace Microsoft.Build.CommandLine.Arguments
         public string PreProcess { get; set; }
 
         /// <summary>
+        /// Gets or sets the path to the project to build.
+        /// </summary>
+        public string Project { get; set; }
+
+        /// <summary>
         /// Gets a list of project-level properties.
         /// </summary>
-        public IDictionary<string, string> Properties { get; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        public IDictionary<string, string> Properties { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         /// Gets a list of text files to use that contain command-line settings.
@@ -191,6 +196,8 @@ namespace Microsoft.Build.CommandLine.Arguments
                 commandLineBuilder.AppendSwitch("@");
                 commandLineBuilder.AppendTextUnquoted($"\"{responseFile}\"");
             }
+
+            commandLineBuilder.AppendFileNameIfNotNull(Project);
 
             return commandLineBuilder.ToString();
         }

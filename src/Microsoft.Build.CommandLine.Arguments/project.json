@@ -6,16 +6,19 @@
     "warningsAsErrors": true,
     "xmlDoc": true
   },
-  "dependencies": {
-    "Microsoft.Build.Utilities.Core": "14.3.0"
-  },
+  "dependencies": {},
   "frameworks": {
     "netstandard1.3": {
       "dependencies": {
-        "NETStandard.Library": "1.6.0"
+        "NETStandard.Library": "1.6.0",
+        "Microsoft.Build.Utilities.Core": "15.1.262-preview5"
       }
     },
-    "net46": {}
+    "net46": {
+      "dependencies": {
+        "Microsoft.Build.Utilities.Core": "14.3.0"
+      }
+    }
   },
   "packOptions": {
     "licenseUrl": "https://github.com/jeffkl/MSBuildArgs/blob/master/LICENSE",
