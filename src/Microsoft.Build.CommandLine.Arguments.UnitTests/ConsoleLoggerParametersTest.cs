@@ -2,6 +2,7 @@ using Microsoft.Build.Framework;
 using NUnit.Framework;
 using Shouldly;
 using System;
+using System.Linq;
 
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 {
@@ -38,6 +39,8 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
         [Test]
         public void ConsoleLoggerParametersOptionsAndVerbosity([Values(true, false)] bool useShortSwitchNames)
         {
+            const LoggerVerbosity expectedVerbosity = LoggerVerbosity.Diagnostic;
+
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
             {
                 ConsoleLoggerParameters = new MSBuildConsoleLoggerParameters
@@ -45,11 +48,11 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
                     Options = MSBuildLoggerOptions.ForceConsoleColor
                               | MSBuildLoggerOptions.ForceNoAlign
                               | MSBuildLoggerOptions.ShowEventId,
-                    Verbosity = LoggerVerbosity.Diagnostic
+                    Verbosity = expectedVerbosity
                 }
             };
 
-            commandLineArguments.ToString(useShortSwitchNames: useShortSwitchNames).ShouldBe($"/{GetSwitchName(useShortSwitchNames)}:\"ShowEventId;ForceNoAlign;ForceConsoleColor;Verbosity={commandLineArguments.ConsoleLoggerParameters.Verbosity}\"");
+            commandLineArguments.ToString(useShortSwitchNames: useShortSwitchNames).ShouldBe($"/{GetSwitchName(useShortSwitchNames)}:\"ShowEventId;ForceNoAlign;ForceConsoleColor;{GetVerbositySwitch(expectedVerbosity, useShortSwitchNames)}\"");
         }
 
         [Test]
@@ -71,17 +74,17 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
         [Test]
         public void ConsoleLoggerParametersVerbosity([Values(true, false)] bool useShortSwitchNames)
         {
-            foreach (var @enum in Enum.GetValues(typeof(LoggerVerbosity)))
+            foreach (LoggerVerbosity verbosity in Enum.GetValues(typeof(LoggerVerbosity)).Cast<LoggerVerbosity>())
             {
                 MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
                 {
                     ConsoleLoggerParameters = new MSBuildConsoleLoggerParameters
                     {
-                        Verbosity = (LoggerVerbosity) @enum
+                        Verbosity = verbosity
                     }
                 };
 
-                commandLineArguments.ToString(useShortSwitchNames: useShortSwitchNames).ShouldBe($"/{GetSwitchName(useShortSwitchNames)}:Verbosity={Enum.GetName(typeof(LoggerVerbosity), @enum)}");
+                commandLineArguments.ToString(useShortSwitchNames: useShortSwitchNames).ShouldBe($"/{GetSwitchName(useShortSwitchNames)}:{GetVerbositySwitch(verbosity, useShortSwitchNames)}");
             }
         }
 

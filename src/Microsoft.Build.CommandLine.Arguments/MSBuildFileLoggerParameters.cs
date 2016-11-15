@@ -26,7 +26,7 @@ namespace Microsoft.Build.CommandLine.Arguments
         /// <summary>
         /// Returns a list of arguments for this object.
         /// </summary>
-        protected override IEnumerable<string> GetArguments()
+        protected override IEnumerable<string> GetArguments(bool useShortSwitchNames)
         {
             if (!String.IsNullOrWhiteSpace(LogFile))
             {
@@ -43,7 +43,7 @@ namespace Microsoft.Build.CommandLine.Arguments
                 yield return $"Encoding={Encoding}";
             }
 
-            foreach (string argument in base.GetArguments())
+            foreach (string argument in base.GetArguments(useShortSwitchNames))
             {
                 yield return argument;
             }

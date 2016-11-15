@@ -158,7 +158,7 @@ namespace Microsoft.Build.CommandLine.Arguments
 
             if (ConsoleLoggerParameters != null)
             {
-                commandLineBuilder.AppendSwitchIfNotNull($"/{(useShortSwitchNames ? "clp" : "ConsoleLoggerParameters")}:", ConsoleLoggerParameters.ToString());
+                commandLineBuilder.AppendSwitchIfNotNull($"/{(useShortSwitchNames ? "clp" : "ConsoleLoggerParameters")}:", ConsoleLoggerParameters.ToString(useShortSwitchNames));
             }
 
             commandLineBuilder.AppendSwitchIfTrue($"/{(useShortSwitchNames ? "dfl" : "DistributedFileLogger")}", DistributedFileLogger);
@@ -178,7 +178,7 @@ namespace Microsoft.Build.CommandLine.Arguments
 
                 commandLineBuilder.AppendSwitch($"/{(useShortSwitchNames ? "fl" : "FileLogger")}{index}");
 
-                commandLineBuilder.AppendSwitchIfNotNull($"/{(useShortSwitchNames ? "flp" : "FileLoggerParameters")}{index}:", FileLoggers[i].ToString());
+                commandLineBuilder.AppendSwitchIfNotNull($"/{(useShortSwitchNames ? "flp" : "FileLoggerParameters")}{index}:", FileLoggers[i].ToString(useShortSwitchNames));
             }
 
             commandLineBuilder.AppendSwitchIfNotNullOrEmpty($"/{(useShortSwitchNames ? "pp" : "PreProcess")}:", PreProcess);

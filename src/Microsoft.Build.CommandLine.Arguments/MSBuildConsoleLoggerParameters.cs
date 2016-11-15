@@ -25,14 +25,24 @@ namespace Microsoft.Build.CommandLine.Arguments
         /// </summary>
         public override string ToString()
         {
+            return ToString(useShortSwitchNames: false);
+        }
+
+        /// <summary>
+        /// Gets this object as a command-line string.
+        /// </summary>
+        /// <param name="useShortSwitchNames"><code>true</code> to use short switch names, otherwise <code>false</code>.</param>
+        /// <returns></returns>
+        public string ToString(bool useShortSwitchNames)
+        {
             // ReSharper disable once AssignNullToNotNullAttribute
-            return GetArguments().Any() ? String.Join(";", GetArguments()) : null;
+            return GetArguments(useShortSwitchNames).Any() ? String.Join(";", GetArguments(useShortSwitchNames)) : null;
         }
 
         /// <summary>
         /// Returns a list of arguments for this object.
         /// </summary>
-        protected virtual IEnumerable<string> GetArguments()
+        protected virtual IEnumerable<string> GetArguments(bool useShortSwitchNames)
         {
             if (Options.HasValue)
             {
@@ -41,7 +51,7 @@ namespace Microsoft.Build.CommandLine.Arguments
 
             if (Verbosity.HasValue)
             {
-                yield return $"Verbosity={Verbosity}";
+                yield return $"{(useShortSwitchNames ? "v" : "Verbosity")}={Verbosity.ToString(useShortSwitchNames)}";
             }
         }
     }

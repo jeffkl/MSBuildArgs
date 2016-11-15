@@ -1,6 +1,7 @@
 using Microsoft.Build.Framework;
 using NUnit.Framework;
 using Shouldly;
+using System;
 using System.Linq;
 
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
@@ -70,14 +71,17 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
         [Test]
         public void FileLoggerSingleVerbosity([Values(true, false)] bool useShortSwitchNames)
         {
-            MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments();
-
-            commandLineArguments.FileLoggers.Add(new MSBuildFileLoggerParameters
+            foreach (LoggerVerbosity expectedVerbosity in Enum.GetValues(typeof(LoggerVerbosity)).Cast<LoggerVerbosity>())
             {
-                Verbosity = LoggerVerbosity.Minimal
-            });
+                MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments();
 
-            commandLineArguments.ToString(useShortSwitchNames: useShortSwitchNames).ShouldBe($"/{GetSwitchName(useShortSwitchNames)} /{GetSecondarySwitchName(useShortSwitchNames)}:Verbosity={commandLineArguments.FileLoggers.First().Verbosity}");
+                commandLineArguments.FileLoggers.Add(new MSBuildFileLoggerParameters
+                {
+                    Verbosity = expectedVerbosity
+                });
+
+                commandLineArguments.ToString(useShortSwitchNames: useShortSwitchNames).ShouldBe($"/{GetSwitchName(useShortSwitchNames)} /{GetSecondarySwitchName(useShortSwitchNames)}:{GetVerbositySwitch(expectedVerbosity, useShortSwitchNames)}");
+            }
         }
 
         protected override string GetSwitchName(bool useShortSwitchNames)
