@@ -2,6 +2,7 @@
 using Microsoft.Build.Utilities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Microsoft.Build.CommandLine.Arguments
@@ -128,6 +129,38 @@ namespace Microsoft.Build.CommandLine.Arguments
         /// Gets or sets a value indicating if the version information only should be displayed.  If the value is <code>true</code>, the project is not built.
         /// </summary>
         public bool? Version { get; set; }
+
+        /// <summary>
+        /// Gets the MSBuild command-line based on the current properties of this object as a response file.
+        /// </summary>
+        /// <param name="responseFilePath">The full path to save the MSBuild response file to.</param>
+        /// <returns>A command-line argument for MSBuild with the path to the response file.</returns>
+        public string ToString(string responseFilePath)
+        {
+            return ToString(responseFilePath, useShortSwitchNames: false);
+        }
+
+        /// <summary>
+        /// Gets the MSBuild command-line based on the current properties of this object as a response file.
+        /// </summary>
+        /// <param name="useShortSwitchNames"><code>true</code> to use short command-line argument switches like '/nr' instead of '/NodeReuse', otherwise <code>false</code>.</param>
+        /// <param name="responseFilePath">The full path to save the MSBuild response file to.</param>
+        /// <returns>A command-line argument for MSBuild with the path to the response file.</returns>
+        public string ToString(string responseFilePath, bool useShortSwitchNames)
+        {
+            string directoryName = Path.GetDirectoryName(responseFilePath);
+
+            Directory.CreateDirectory(directoryName);
+
+            File.WriteAllText(responseFilePath, ToString(useShortSwitchNames));
+
+            CommandLineBuilder commandLineBuilder = new CommandLineBuilder();
+
+            commandLineBuilder.AppendSwitch("@");
+            commandLineBuilder.AppendTextUnquoted($"\"{responseFilePath}\"");
+
+            return commandLineBuilder.ToString();
+        }
 
         /// <summary>
         /// Gets the MSBuild command-line based on the current properties of this object.
