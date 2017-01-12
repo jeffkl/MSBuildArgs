@@ -27,6 +27,11 @@ namespace Microsoft.Build.CommandLine.Arguments
         public bool? DistributedFileLogger { get; set; }
 
         /// <summary>
+        /// Gets a list of <see cref="MSBuildDistributedLoggerParameters"/>.
+        /// </summary>
+        public IList<MSBuildDistributedLoggerParameters> DistributedLoggers { get; } = new List<MSBuildDistributedLoggerParameters>();
+
+        /// <summary>
         /// Gets a list of <see cref="MSBuildFileLoggerParameters"/>.
         /// </summary>
         public IList<MSBuildFileLoggerParameters> FileLoggers { get; set; } = new List<MSBuildFileLoggerParameters>();
@@ -179,6 +184,11 @@ namespace Microsoft.Build.CommandLine.Arguments
                 commandLineBuilder.AppendSwitch($"/{(useShortSwitchNames ? "fl" : "FileLogger")}{index}");
 
                 commandLineBuilder.AppendSwitchIfNotNull($"/{(useShortSwitchNames ? "flp" : "FileLoggerParameters")}{index}:", FileLoggers[i].ToString(useShortSwitchNames));
+            }
+
+            foreach (MSBuildDistributedLoggerParameters distributedLogger in DistributedLoggers)
+            {
+                commandLineBuilder.AppendSwitch($"\"/{(useShortSwitchNames ? "dl" : "DistributedLogger")}:{distributedLogger}\"");
             }
 
             commandLineBuilder.AppendSwitchIfNotNullOrEmpty($"/{(useShortSwitchNames ? "pp" : "PreProcess")}:", PreProcess);
