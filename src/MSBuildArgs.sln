@@ -3,9 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26828.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Build.CommandLine.Arguments", "Microsoft.Build.CommandLine.Arguments\Microsoft.Build.CommandLine.Arguments.csproj", "{2574A969-934C-439F-BBC0-6D46F7CE1FFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Build.CommandLine.Arguments", "Microsoft.Build.CommandLine.Arguments\Microsoft.Build.CommandLine.Arguments.csproj", "{2574A969-934C-439F-BBC0-6D46F7CE1FFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Build.CommandLine.Arguments.UnitTests", "Microsoft.Build.CommandLine.Arguments.UnitTests\Microsoft.Build.CommandLine.Arguments.UnitTests.csproj", "{510FC774-5E9C-4B55-A015-0C2A7F55861A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Build.CommandLine.Arguments.UnitTests", "Microsoft.Build.CommandLine.Arguments.UnitTests\Microsoft.Build.CommandLine.Arguments.UnitTests.csproj", "{510FC774-5E9C-4B55-A015-0C2A7F55861A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6CA84474-1B0F-4CA4-98FE-195BF8D230C1}"
+	ProjectSection(SolutionItems) = preProject
+		..\Directory.Build.targets = ..\Directory.Build.targets
+		..\Packages.props = ..\Packages.props
+		..\version.json = ..\version.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

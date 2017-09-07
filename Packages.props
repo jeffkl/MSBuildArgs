@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildThisFileFullPath);$(MSBuildAllProjects)</MSBuildAllProjects>
+  </PropertyGroup>
+  
+  <ItemGroup Label="Package versions used by this repository">
+    <!--
+      When referencing a new package, update this list with a matching Include and the desired version.  When updating
+      a package, remove the Version from an individual project and update the Version in this file instead.
+    -->
+    <PackageVersion Include="Microsoft.Build.Utilities.Core" Version="[15.3.409]" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="[15.3.0]" />
+    <PackageVersion Include="Microsoft.NETCore.App" Version="[1.1.2]" />
+    <PackageVersion Include="NUnit" Version="[3.8.1]" />
+    <PackageVersion Include="NUnit3TestAdapter" Version="[3.8.0]" />
+    <PackageVersion Include="NETStandard.Library" Version="[1.6.1]" />
+    <PackageVersion Include="Nerdbank.GitVersioning" Version="[2.0.37-beta]" PrivateAssets="All" />
+    <PackageVersion Include="Shouldly" Version="[2.8.2]" />
+  </ItemGroup>
+
+  <ItemGroup Label="Packages to add to all projects">
+    <!--
+      To reference a package in all projects, add it to this list.  Be sure to specify also specify a PackageVersion above.
+    -->
+    <GlobalPackageReference Include="Nerdbank.GitVersioning" Condition=" '$(EnableGitVersioning)' != 'false' " />
+  </ItemGroup>
+
+</Project>
