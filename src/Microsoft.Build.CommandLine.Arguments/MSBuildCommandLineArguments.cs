@@ -13,6 +13,11 @@ namespace Microsoft.Build.CommandLine.Arguments
     public class MSBuildCommandLineArguments
     {
         /// <summary>
+        /// Gets or sets the <see cref="MSBuildBinaryLoggerParameters"/>.
+        /// </summary>
+        public MSBuildBinaryLoggerParameters BinaryLogger { get; set; }
+
+        /// <summary>
         /// Gets or sets the <see cref="MSBuildConsoleLoggerParameters"/>.
         /// </summary>
         public MSBuildConsoleLoggerParameters ConsoleLoggerParameters { get; set; }
@@ -222,6 +227,11 @@ namespace Microsoft.Build.CommandLine.Arguments
             foreach (MSBuildDistributedLoggerParameters distributedLogger in DistributedLoggers)
             {
                 commandLineBuilder.AppendSwitch($"\"/{(useShortSwitchNames ? "dl" : "DistributedLogger")}:{distributedLogger}\"");
+            }
+
+            if (BinaryLogger != null)
+            {
+                commandLineBuilder.AppendSwitch($"/{(useShortSwitchNames ? "bl" : "BinaryLogger")}{BinaryLogger}");
             }
 
             commandLineBuilder.AppendSwitchIfNotNullOrEmpty($"/{(useShortSwitchNames ? "pp" : "PreProcess")}:", PreProcess);
