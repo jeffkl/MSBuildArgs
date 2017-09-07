@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard1.3;net46</TargetFrameworks>
+    
+    <Description>A class library for generating an MSBuild command-line</Description>
+    <AssemblyTitle>MSBuild Command-line Argument Builder</AssemblyTitle>
+    <VersionPrefix>1.0.0-beta</VersionPrefix>
+    <Authors>jeffkl</Authors>
+    <AssemblyName>Microsoft.Build.CommandLine.Arguments</AssemblyName>
+    <PackageId>Microsoft.Build.CommandLine.Arguments</PackageId>
+    <PackageTags>MSBuild;command;line;builder</PackageTags>
+    <PackageLicenseUrl>https://github.com/jeffkl/MSBuildArgs/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/jeffkl/MSBuildArgs</RepositoryUrl>
+    
+    <WarningsAsErrors>true</WarningsAsErrors>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="15.3.409" />
+  </ItemGroup>
+
+  <!--<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
+    <PackageReference Include="NETStandard.Library" Version="1.6.0" />
+    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="15.1.262-preview5" />
+  </ItemGroup>-->
+
+  <!--<ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
+
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>-->
+
+</Project>
