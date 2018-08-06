@@ -1,13 +1,16 @@
-using NUnit.Framework;
 using Shouldly;
+using Xunit;
 
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 {
-    [TestFixture]
     public class NodeReuseTest : TestBase
     {
-        [Test]
-        public void NodeReuse([Values(true, false)] bool useShortSwitchNames, [Values(true, false)] bool nodeResuse)
+        [Theory]
+        [InlineData(true, true)]
+        [InlineData(true, false)]
+        [InlineData(false, true)]
+        [InlineData(false, false)]
+        public void NodeReuse(bool useShortSwitchNames, bool nodeResuse)
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
             {

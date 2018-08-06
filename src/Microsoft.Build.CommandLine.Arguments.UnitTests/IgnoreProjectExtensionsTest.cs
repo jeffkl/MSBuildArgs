@@ -1,14 +1,15 @@
-using NUnit.Framework;
 using Shouldly;
 using System;
+using Xunit;
 
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 {
-    [TestFixture]
     public class IgnoreProjectExtensionsTest : TestBase
     {
-        [Test]
-        public void IgnoreProjectExtensionsMultiple([Values(true, false)] bool useShortSwitchNames)
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IgnoreProjectExtensionsMultiple(bool useShortSwitchNames)
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments();
 
@@ -19,8 +20,10 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
             commandLineArguments.ToString(useShortSwitchNames: useShortSwitchNames).ShouldBe($"/{GetSwitchName(useShortSwitchNames)}:{String.Join(";", commandLineArguments.IgnoreProjectExtensions)}");
         }
 
-        [Test]
-        public void IgnoreProjectExtensionsSingle([Values(true, false)] bool useShortSwitchNames)
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IgnoreProjectExtensionsSingle(bool useShortSwitchNames)
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments();
 

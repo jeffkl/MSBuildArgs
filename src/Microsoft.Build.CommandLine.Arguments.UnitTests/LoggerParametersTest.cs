@@ -1,14 +1,15 @@
-﻿using NUnit.Framework;
-using Shouldly;
+﻿using Shouldly;
 using System.Linq;
+using Xunit;
 
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 {
-    [TestFixture]
     public class LoggerParametersTest : TestBase
     {
-        [Test]
-        public void LoggerParametersMultipleTest([Values(true, false)] bool useShortSwitchNames)
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void LoggerParametersMultipleTest(bool useShortSwitchNames)
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments();
 
@@ -28,8 +29,10 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
             commandLineArguments.ToString(useShortSwitchNames: useShortSwitchNames).ShouldBe($"\"/{GetSwitchName(useShortSwitchNames)}:{commandLineArguments.Loggers.First().ClassName},{commandLineArguments.Loggers.First().Assembly};{commandLineArguments.Loggers.First().Parameters}\" \"/{GetSwitchName(useShortSwitchNames)}:{commandLineArguments.Loggers.Last().ClassName},{commandLineArguments.Loggers.Last().Assembly}\"");
         }
 
-        [Test]
-        public void LoggerParametersSingleTest([Values(true, false)] bool useShortSwitchNames)
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void LoggerParametersSingleTest(bool useShortSwitchNames)
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments();
 

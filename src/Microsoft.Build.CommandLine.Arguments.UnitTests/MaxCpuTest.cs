@@ -1,14 +1,18 @@
-using NUnit.Framework;
 using Shouldly;
-using System.Collections.Generic;
+using Xunit;
 
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 {
-    [TestFixture]
     public class MaxCpuTest : TestBase
     {
-        [Test]
-        public void MaxCpuCountPositiveNumber([Values(true, false)] bool useShortSwitchNames, [Values(1, 10, 50)] int maxCpuCount)
+        [Theory]
+        [InlineData(true, 1)]
+        [InlineData(true, 10)]
+        [InlineData(true, 50)]
+        [InlineData(false, 1)]
+        [InlineData(false, 10)]
+        [InlineData(false, 50)]
+        public void MaxCpuCountPositiveNumber(bool useShortSwitchNames, int maxCpuCount)
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
             {
@@ -18,8 +22,14 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
             commandLineArguments.ToString(useShortSwitchNames: useShortSwitchNames).ShouldBe($"/{GetSwitchName(useShortSwitchNames)}:{maxCpuCount}");
         }
 
-        [Test]
-        public void MaxCpuCountZeroAndNegative([Values(true, false)] bool useShortSwitchNames, [Values(0, -1, -50)] int maxCpuCount)
+        [Theory]
+        [InlineData(true, 0)]
+        [InlineData(true, -1)]
+        [InlineData(true, -50)]
+        [InlineData(false, 0)]
+        [InlineData(false, -1)]
+        [InlineData(false, -50)]
+        public void MaxCpuCountZeroAndNegative(bool useShortSwitchNames, int maxCpuCount)
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
             {

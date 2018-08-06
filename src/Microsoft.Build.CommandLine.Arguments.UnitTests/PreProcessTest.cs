@@ -1,14 +1,15 @@
-using NUnit.Framework;
 using Shouldly;
 using System;
+using Xunit;
 
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 {
-    [TestFixture]
     public class PreProcessTest : TestBase
     {
-        [Test]
-        public void PreProcessCustom([Values(true, false)] bool useShortSwitchNames)
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void PreProcessCustom(bool useShortSwitchNames)
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
             {
@@ -18,8 +19,10 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
             commandLineArguments.ToString(useShortSwitchNames: useShortSwitchNames).ShouldBe($"/{GetSwitchName(useShortSwitchNames)}:{commandLineArguments.PreProcess}");
         }
 
-        [Test]
-        public void PreProcessDefault([Values(true, false)] bool useShortSwitchNames)
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void PreProcessDefault(bool useShortSwitchNames)
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
             {

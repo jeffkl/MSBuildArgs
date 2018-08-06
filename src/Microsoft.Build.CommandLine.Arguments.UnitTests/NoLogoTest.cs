@@ -1,12 +1,12 @@
 using NUnit.Framework;
 using Shouldly;
+using Xunit;
 
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 {
-    [TestFixture]
     public class NoLogoTest
     {
-        [Test]
+        [Fact]
         public void NoLogoFalse()
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
@@ -17,7 +17,7 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
             commandLineArguments.ToString().ShouldBeEmpty();
         }
 
-        [Test]
+        [Fact]
         public void NoLogoTrue()
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments

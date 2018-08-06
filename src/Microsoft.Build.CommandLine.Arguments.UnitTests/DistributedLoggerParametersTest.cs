@@ -1,14 +1,15 @@
-﻿using NUnit.Framework;
-using Shouldly;
+﻿using Shouldly;
 using System.Linq;
+using Xunit;
 
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 {
-    [TestFixture]
     public class DistributedLoggerParametersTest : TestBase
     {
-        [Test]
-        public void LoggerParametersMultipleTest([Values(true, false)] bool useShortSwitchNames)
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void LoggerParametersMultipleTest(bool useShortSwitchNames)
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments();
 
@@ -44,8 +45,10 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
             commandLineArguments.ToString(useShortSwitchNames: useShortSwitchNames).ShouldBe($"\"/{GetSwitchName(useShortSwitchNames)}:{commandLineArguments.DistributedLoggers.First().CentralLogger.ClassName},{commandLineArguments.DistributedLoggers.First().CentralLogger.Assembly};{commandLineArguments.DistributedLoggers.First().CentralLogger.Parameters}*{commandLineArguments.DistributedLoggers.First().ForwardingLogger.ClassName},{commandLineArguments.DistributedLoggers.First().ForwardingLogger.Assembly}\" \"/{GetSwitchName(useShortSwitchNames)}:{commandLineArguments.DistributedLoggers.Last().CentralLogger.ClassName},{commandLineArguments.DistributedLoggers.Last().CentralLogger.Assembly}*{commandLineArguments.DistributedLoggers.Last().ForwardingLogger.ClassName},{commandLineArguments.DistributedLoggers.Last().ForwardingLogger.Assembly}\"");
         }
 
-        [Test]
-        public void LoggerParametersSingleTest([Values(true, false)] bool useShortSwitchNames)
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void LoggerParametersSingleTest(bool useShortSwitchNames)
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments();
 

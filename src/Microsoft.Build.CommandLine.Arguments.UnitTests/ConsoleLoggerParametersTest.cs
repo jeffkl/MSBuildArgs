@@ -1,16 +1,17 @@
 using Microsoft.Build.Framework;
-using NUnit.Framework;
 using Shouldly;
 using System;
 using System.Linq;
+using Xunit;
 
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 {
-    [TestFixture]
     public class ConsoleLoggerParametersTest : TestBase
     {
-        [Test]
-        public void ConsoleLoggerParametersMultipleOptions([Values(true, false)] bool useShortSwitchNames)
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void ConsoleLoggerParametersMultipleOptions(bool useShortSwitchNames)
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
             {
@@ -25,7 +26,7 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
             commandLineArguments.ToString(useShortSwitchNames: useShortSwitchNames).ShouldBe($"/{GetSwitchName(useShortSwitchNames)}:\"ErrorsOnly;ShowCommandLine;DisableMPLogging\"");
         }
 
-        [Test]
+        [Fact]
         public void ConsoleLoggerParametersNotNullButEmpty()
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
@@ -36,8 +37,10 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
             commandLineArguments.ToString().ShouldBe("");
         }
 
-        [Test]
-        public void ConsoleLoggerParametersOptionsAndVerbosity([Values(true, false)] bool useShortSwitchNames)
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void ConsoleLoggerParametersOptionsAndVerbosity(bool useShortSwitchNames)
         {
             const LoggerVerbosity expectedVerbosity = LoggerVerbosity.Diagnostic;
 
@@ -55,8 +58,10 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
             commandLineArguments.ToString(useShortSwitchNames: useShortSwitchNames).ShouldBe($"/{GetSwitchName(useShortSwitchNames)}:\"ShowEventId;ForceNoAlign;ForceConsoleColor;{GetVerbositySwitch(expectedVerbosity, useShortSwitchNames)}\"");
         }
 
-        [Test]
-        public void ConsoleLoggerParametersSingleOption([Values(true, false)] bool useShortSwitchNames)
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void ConsoleLoggerParametersSingleOption(bool useShortSwitchNames)
         {
             const MSBuildLoggerOptions options = MSBuildLoggerOptions.ErrorsOnly;
 
@@ -71,8 +76,10 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
             commandLineArguments.ToString(useShortSwitchNames: useShortSwitchNames).ShouldBe($"/{GetSwitchName(useShortSwitchNames)}:{options}");
         }
 
-        [Test]
-        public void ConsoleLoggerParametersVerbosity([Values(true, false)] bool useShortSwitchNames)
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void ConsoleLoggerParametersVerbosity(bool useShortSwitchNames)
         {
             foreach (LoggerVerbosity verbosity in Enum.GetValues(typeof(LoggerVerbosity)).Cast<LoggerVerbosity>())
             {

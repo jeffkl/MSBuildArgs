@@ -1,12 +1,11 @@
-using NUnit.Framework;
 using Shouldly;
+using Xunit;
 
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 {
-    [TestFixture]
     public class ProjectTest
     {
-        [Test]
+        [Fact]
         public void ProjectNull()
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
@@ -17,7 +16,7 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
             commandLineArguments.ToString().ShouldBeEmpty();
         }
 
-        [Test]
+        [Fact]
         public void ProjectSpecified()
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
@@ -28,7 +27,7 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
             commandLineArguments.ToString().ShouldBe($"{commandLineArguments.Project}");
         }
 
-        [Test]
+        [Fact]
         public void ProjectSpecifiedWithSpaces()
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments

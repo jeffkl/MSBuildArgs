@@ -1,12 +1,12 @@
 using NUnit.Framework;
 using Shouldly;
+using Xunit;
 
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 {
-    [TestFixture]
     public class DetailedSummaryTest : TestBase
     {
-        [Test]
+        [Fact]
         public void DetailedSummaryFalse()
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
@@ -17,8 +17,10 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
             commandLineArguments.ToString().ShouldBeEmpty();
         }
 
-        [Test]
-        public void DetailedSummaryTrue([Values(true, false)] bool useShortSwitchNames)
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void DetailedSummaryTrue(bool useShortSwitchNames)
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
             {

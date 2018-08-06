@@ -1,13 +1,14 @@
-using NUnit.Framework;
 using Shouldly;
+using Xunit;
 
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 {
-    [TestFixture]
     public class ToolsVersionTest : TestBase
     {
-        [Test]
-        public void ToolsVersion([Values(true, false)] bool useShortSwitchNames)
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void ToolsVersion(bool useShortSwitchNames)
         {
             const string toolsVersion = "Test";
 

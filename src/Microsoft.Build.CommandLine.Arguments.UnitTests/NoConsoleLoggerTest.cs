@@ -1,12 +1,12 @@
 using NUnit.Framework;
 using Shouldly;
+using Xunit;
 
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 {
-    [TestFixture]
     public class NoConsoleLoggerTest : TestBase
     {
-        [Test]
+        [Fact]
         public void NoConsoleLoggerFalse()
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
@@ -17,8 +17,10 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
             commandLineArguments.ToString().ShouldBeEmpty();
         }
 
-        [Test]
-        public void NoConsoleLoggerTrue([Values(true, false)] bool useShortSwitchNames)
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void NoConsoleLoggerTrue(bool useShortSwitchNames)
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
             {

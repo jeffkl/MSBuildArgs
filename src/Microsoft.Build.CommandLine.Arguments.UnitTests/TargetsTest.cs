@@ -1,15 +1,16 @@
-﻿using NUnit.Framework;
-using Shouldly;
+﻿using Shouldly;
 using System;
 using System.Collections.Generic;
+using Xunit;
 
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 {
-    [TestFixture]
     public class TargetsTest : TestBase
     {
-        [Test]
-        public void TargetMultiple([Values(true, false)] bool useShortSwitchNames)
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void TargetMultiple(bool useShortSwitchNames)
         {
             var targets = new List<string>
             {
@@ -28,8 +29,10 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
             commandLineArguments.ToString(useShortSwitchNames: useShortSwitchNames).ShouldBe($"/{GetSwitchName(useShortSwitchNames)}:{String.Join(";", targets)}");
         }
 
-        [Test]
-        public void TargetSingle([Values(true, false)] bool useShortSwitchNames)
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void TargetSingle(bool useShortSwitchNames)
         {
             const string target = "Test";
 

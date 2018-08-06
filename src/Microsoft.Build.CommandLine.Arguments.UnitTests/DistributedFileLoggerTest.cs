@@ -1,12 +1,11 @@
-using NUnit.Framework;
 using Shouldly;
+using Xunit;
 
 namespace Microsoft.Build.CommandLine.Arguments.UnitTests
 {
-    [TestFixture]
     public class DistributedFileLoggerTest : TestBase
     {
-        [Test]
+        [Fact]
         public void DistributedFileLoggerFalse()
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
@@ -17,8 +16,10 @@ namespace Microsoft.Build.CommandLine.Arguments.UnitTests
             commandLineArguments.ToString().ShouldBeEmpty();
         }
 
-        [Test]
-        public void DistributedFileLoggerTrue([Values(true, false)] bool useShortSwitchNames)
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void DistributedFileLoggerTrue(bool useShortSwitchNames)
         {
             MSBuildCommandLineArguments commandLineArguments = new MSBuildCommandLineArguments
             {
