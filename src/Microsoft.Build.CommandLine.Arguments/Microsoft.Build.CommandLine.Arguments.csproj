@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.3;net46</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net46</TargetFrameworks>
     
     <Description>A class library for generating an MSBuild command-line</Description>
     <AssemblyTitle>MSBuild Command-line Argument Builder</AssemblyTitle>
